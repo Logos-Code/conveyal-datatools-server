@@ -1,0 +1,71 @@
+application:
+  title: WRI - CONVEYAL - GTFS
+  description: Un centro de comando para administrar, editar, validar e implementar GTFS.
+  logo: https://d3oufy0f4ylur0.cloudfront.net/assets/img/wri-logo-128.png
+  logo_large: https://d3oufy0f4ylur0.cloudfront.net/assets/img/wri-logo-512.png
+  shortcut_icon_url: https://d3oufy0f4ylur0.cloudfront.net/assets/img/wri-logo-160.png
+  client_assets_url: http://localhost:9966
+  public_url: http://localhost:5000
+  notifications_enabled: false
+  docs_url: http://conveyal-data-tools.readthedocs.org
+  support_email: support@ibigroup.com
+  port: 5000
+  data:
+    use_s3_storage: false
+    gtfs: /tmp
+    s3_region: us-east-1
+    gtfs_s3_bucket: bucket-name
+modules:
+  enterprise:
+    enabled: false
+  deployment:
+    enabled: true
+    ec2:
+      enabled: false
+      default_ami: ami-your-ami-id
+    # Note: using a cloudfront URL for these download URLs will greatly
+    # increase download/deploy speed.
+    otp_download_url: https://optional-otp-repo.com
+  editor:
+    enabled: true
+  user_admin:
+    enabled: true
+  gtfsplus:
+    enabled: false
+  gtfsapi:
+    enabled: true
+    load_on_fetch: false
+    # use_extension: mtc
+    # update_frequency: 30 # in seconds
+  manager:
+    normalizeFieldTransformation:
+      # Enter capitalization exceptions (e.g. acronyms), in the desired case, and separated by commas.
+      defaultCapitalizationExceptions:
+        - ACE
+        - BART
+      # Enter substitutions (e.g. substitute '@' with 'at'), one dashed entry for each substitution, with:
+      # - pattern: the regex string pattern that will be replaced,
+      # - replacement: the replacement string for that pattern,
+      # - normalizeSpace: if true, the resulting field value will include one space before and after the replacement string.
+      #       Note: if the replacement must be blank, then normalizeSpace should be set to false
+      #       and whitespace management should be handled in pattern instead.
+      # Substitutions are executed in order they appear in the list.
+      defaultSubstitutions:
+        - description: "Replace '@' with 'at', and normalize space."
+          pattern: "@"
+          replacement: at
+          normalizeSpace: true
+        - description: "Replace '+' (\\+ in regex) and '&' with 'and', and normalize space."
+          pattern: "[\\+&]"
+          replacement: and
+          normalizeSpace: true
+extensions:
+  transitland:
+    enabled: false
+    api: https://transit.land/api/v1/feeds
+  transitfeeds:
+    enabled: false
+    api: http://api.transitfeeds.com/v1/getFeeds
+    key: your-api-key
+  mtc:
+    enabled: false
