@@ -10,11 +10,11 @@ docker_build: clean
 build: docker_build
 	docker run --rm --volume ${PWD}/target:/app/target datatools-server:latest -- mvn -DskipTests '-Dproject.finalName=${FINAL_BUILD_NAME}' package
 
-run: build
-	mvn exec:java -Dexec.mainClass="com.conveyal.datatools.manager.DataManager"
+run-dev:
+	mvn exec:java -Dexec.mainClass="com.conveyal.datatools.manager.DataManager" -Xmx4G configurations/default/env.dev.yml configurations/default/server.dev.yml
 
-run_jar:
-	java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar
+run-jar:
+	java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.dev.yml configurations/default/server.dev.yml
 
 deploy:
 	rm -rf ${DEPLOY_AUX_DIR}
