@@ -19,7 +19,7 @@ modules:
   enterprise:
     enabled: false
   deployment:
-    enabled: true
+    enabled: false
     ec2:
       enabled: false
       default_ami: ami-your-ami-id
