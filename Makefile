@@ -4,17 +4,17 @@ DEPLOY_AUX_DIR=deployment
 clean:
 	rm -rf target
 
-docker_build: clean
-	docker build -t datatools-server:latest .
+build: clean
+	docker-compose up backend-build
 
-build: docker_build
-	docker run --rm --volume ${PWD}/target:/app/target datatools-server:latest -- mvn -DskipTests '-Dproject.finalName=${FINAL_BUILD_NAME}' package
+run:
+	docker-compose up backend
 
-run-dev:
-	mvn exec:java -Dexec.mainClass="com.conveyal.datatools.manager.DataManager" -Xmx4G configurations/default/env.dev.yml configurations/default/server.dev.yml
+stop:
+	docker-compose down
 
 run-jar:
-	java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.dev.yml configurations/default/server.dev.yml
+	java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
 
 deploy:
 	rm -rf ${DEPLOY_AUX_DIR}

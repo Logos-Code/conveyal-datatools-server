@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend-build:
+    build: 
+      context: .
+      target: build
+    image: datatools-server-build:latest
+    volumes:
+      - ${PWD}:/app
+  backend:
+    build: 
+      context: .
+      target: base
+    image: datatools-server:latest
+    volumes:
+      - ${PWD}/target:/app/target
+      - ${PWD}/configurations/default/env.yml:/app/configurations/default/env.yml
+      - ${PWD}/configurations/default/server.dev.yml:/app/configurations/default/server.dev.yml
+    command: sh -c 'java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml'
+    ports:
+      - "5000:5000"
