@@ -1,6 +1,9 @@
 FINAL_BUILD_NAME=wri-conveyal-gtfs-server
 DEPLOY_AUX_DIR=deployment
 
+db-tunnel:
+	ssh -N -L 5432:wri-conveyal-gtfs.cjgejhnxhoup.us-east-1.rds.amazonaws.com:5432 -i ../wri-conveyal-gtfs-infra/prod/us-east-1/wri-conveyal-gtfs-api.pem ec2-user@wrigtfs.us-east-1.elasticbeanstalk.com
+
 clean:
 	rm -rf target
 
