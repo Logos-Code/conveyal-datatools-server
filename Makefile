@@ -1,4 +1,4 @@
-FINAL_BUILD_NAME=wri-conveyal-gtfs-server
+FINAL_BUILD_NAME=prod
 DEPLOY_AUX_DIR=deployment
 
 db-tunnel:
@@ -21,10 +21,10 @@ run-jar:
 
 deploy:
 	rm -rf ${DEPLOY_AUX_DIR}
-	rm -f ${FINAL_BUILD_NAME}.zip
 	mkdir ${DEPLOY_AUX_DIR}
 	cp target/wri-conveyal-gtfs-server.jar ${DEPLOY_AUX_DIR}
-	cp configurations/default/*.yml ${DEPLOY_AUX_DIR}
+	cp configurations/default/env.yml ${DEPLOY_AUX_DIR}
+	cp configurations/default/server.yml ${DEPLOY_AUX_DIR}
 	cp -r .ebextensions ${DEPLOY_AUX_DIR}
 	cp -r .platform ${DEPLOY_AUX_DIR}
 	echo "web: java -Dfile.encoding=UTF-8 -jar wri-conveyal-gtfs-server.jar env.yml server.yml" > ${DEPLOY_AUX_DIR}/Procfile
