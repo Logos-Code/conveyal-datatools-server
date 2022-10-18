@@ -17,7 +17,7 @@ stop:
 	docker-compose down
 
 run-jar:
-	java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
+	java "-Dfile.encoding=UTF-8" -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
 
 deploy:
 	rm -rf ${DEPLOY_AUX_DIR}
