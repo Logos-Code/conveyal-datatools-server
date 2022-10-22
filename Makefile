@@ -19,7 +19,7 @@ stop:
 run-jar:
 	java "-Dfile.encoding=UTF-8" -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
 
-deploy:
+deploy: build
 	rm -rf ${DEPLOY_AUX_DIR}
 	mkdir ${DEPLOY_AUX_DIR}
 	cp target/wri-conveyal-gtfs-server.jar ${DEPLOY_AUX_DIR}
