@@ -25,3 +25,5 @@ env.yml-original
 server.yml
 
 deployment
+
+*.pem
