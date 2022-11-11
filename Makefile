@@ -8,13 +8,13 @@ clean:
 	rm -rf target
 
 build: clean
-	docker-compose up backend-build
+	docker compose up backend-build
 
 run:
-	docker-compose up backend
+	docker compose up backend
 
 stop:
-	docker-compose down
+	docker compose down
 
 run-jar:
 	java "-Dfile.encoding=UTF-8" -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
