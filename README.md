@@ -19,7 +19,7 @@ Note: `dev` branch docs can be found [here](http://conveyal-data-tools.readthedo
     2. Download from 1password the file `wri-conveyal-gtfs-api.pem`
     3. Run:
         ```sh
-        ssh -N -L 5432:wri-conveyal-gtfs.cjgejhnxhoup.us-east-1.rds.amazonaws.com:5432 -i wri-conveyal-gtfs-api.pem ec2-user@wrigtfs.us-east-1.elasticbeanstalk.com
+        make db-tunnel
         ```
 2. Build and start the backend
     1. Download from 1password the file `WRI-CONVEYAL-GTFS: env.yml (prod)` and place it at `./configurations/default/env.yml`
