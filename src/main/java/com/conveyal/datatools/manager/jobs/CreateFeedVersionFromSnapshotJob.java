@@ -24,14 +24,14 @@ public class CreateFeedVersionFromSnapshotJob extends FeedSourceJob {
     private final Snapshot snapshot;
 
     public CreateFeedVersionFromSnapshotJob(FeedSource feedSource, Snapshot snapshot, Auth0UserProfile owner) {
-        super(owner, "Creating Feed Version from Snapshot for " + feedSource.name, JobType.CREATE_FEEDVERSION_FROM_SNAPSHOT);
+        super(owner, "Creando versión del Feed desde Snapshot para " + feedSource.name, JobType.CREATE_FEEDVERSION_FROM_SNAPSHOT);
         this.feedVersion = new FeedVersion(feedSource, snapshot);
         this.snapshot = snapshot;
     }
 
     @Override
     public void jobLogic() {
-        status.update("Exporting snapshot to GTFS...", 10);
+        status.update("Exportando snapshot a GTFS...", 10);
         // Add the jobs to handle this operation in order.
         addNextJob(
             // First export the snapshot to GTFS.

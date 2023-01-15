@@ -73,7 +73,7 @@ public class CreateSnapshotJob extends MonitorableJob {
     private FeedSource feedSource;
 
     public CreateSnapshotJob(Auth0UserProfile owner, Snapshot snapshot, boolean updateBufferNamespace, boolean storeSnapshot, boolean preserveBufferAsSnapshot) {
-        super(owner, "Creating snapshot for " + snapshot.feedSourceId, JobType.CREATE_SNAPSHOT);
+        super(owner, "Creando snapshot para " + snapshot.feedSourceId, JobType.CREATE_SNAPSHOT);
         this.namespace = snapshot.snapshotOf;
         this.snapshot = snapshot;
         this.updateBuffer = updateBufferNamespace;
@@ -83,12 +83,12 @@ public class CreateSnapshotJob extends MonitorableJob {
     }
 
     public CreateSnapshotJob(Auth0UserProfile owner, Snapshot snapshot) {
-        super(owner, "Creating snapshot for " + snapshot.feedSourceId, JobType.CREATE_SNAPSHOT);
+        super(owner, "Creando snapshot para " + snapshot.feedSourceId, JobType.CREATE_SNAPSHOT);
         this.snapshot = snapshot;
         this.updateBuffer = false;
         this.storeSnapshot = true;
         this.preserveBuffer = false;
-        status.update( "Initializing...", 0);
+        status.update( "Inicializando...", 0);
     }
 
     @JsonProperty
@@ -108,10 +108,10 @@ public class CreateSnapshotJob extends MonitorableJob {
         // Get count of snapshots to set new version number.
         feedSource = Persistence.feedSources.getById(snapshot.feedSourceId);
         // Update job name to use feed source name (rather than ID).
-        this.name = String.format("Creating snapshot for %s", feedSource.name);
+        this.name = String.format("Creando snapshot para %s", feedSource.name);
         Collection<Snapshot> existingSnapshots = feedSource.retrieveSnapshots();
         int version = existingSnapshots.size();
-        status.update("Creating snapshot...", 20);
+        status.update("Creando snapshot...", 20);
         FeedLoadResult loadResult = makeSnapshot(namespace, DataManager.GTFS_DATA_SOURCE, !feedSource.preserveStopTimesSequence);
         snapshot.version = version;
         snapshot.namespace = loadResult.uniqueIdentifier;
@@ -120,7 +120,7 @@ public class CreateSnapshotJob extends MonitorableJob {
             snapshot.generateName();
         }
         snapshot.snapshotTime = loadResult.completionTime;
-        status.update("Database snapshot finished.", 80);
+        status.update("Snapshot de la base de datos finalizada.", 80);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class CreateSnapshotJob extends MonitorableJob {
                         snapshot.namespace
                 );
             }
-            status.completeSuccessfully("Created snapshot!");
+            status.completeSuccessfully("Snapshot creada!");
         }
     }
 }

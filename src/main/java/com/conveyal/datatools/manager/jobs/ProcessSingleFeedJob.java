@@ -39,7 +39,7 @@ public class ProcessSingleFeedJob extends FeedVersionJob {
      * Create a job for the given feed version.
      */
     public ProcessSingleFeedJob(FeedVersion feedVersion, Auth0UserProfile owner, boolean isNewVersion) {
-        super(owner, "Processing GTFS for " + (feedVersion.parentFeedSource() != null ? feedVersion.parentFeedSource().name : "unknown feed source"), JobType.PROCESS_FEED);
+        super(owner, "Procesando GTFS para " + (feedVersion.parentFeedSource() != null ? feedVersion.parentFeedSource().name : "feed source desconocida"), JobType.PROCESS_FEED);
         this.feedVersion = feedVersion;
         this.feedSource = feedVersion.parentFeedSource();
         this.isNewVersion = isNewVersion;

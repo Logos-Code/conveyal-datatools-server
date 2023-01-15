@@ -164,7 +164,7 @@ public abstract class MonitorableJob implements Runnable, Serializable {
             jobLogic();
             if (status.error) {
                 parentJobErrored = true;
-                cancelMessage = String.format("Task cancelled due to error in %s task", getClass().getSimpleName());
+                cancelMessage = String.format("Tarea cancelada por error en %s", getClass().getSimpleName());
             }
             // Immediately run any sub-jobs in sequence in the current thread.
             // This hogs the current thread pool thread but makes execution order predictable.
@@ -177,14 +177,14 @@ public abstract class MonitorableJob implements Runnable, Serializable {
                     // Calculate completion based on number of sub jobs remaining.
                     double percentComplete = subJobNumber * 100D / subJobsTotal;
                     // Run sub-task if no error has errored during parent job or previous sub-task execution.
-                    status.update(String.format("Waiting on %s...", subJobName), percentComplete);
+                    status.update(String.format("Esperando que %s...", subJobName), percentComplete);
                     subJob.run();
                     // Record if there has been an error in the execution of the sub-task. (Note: this will not
                     // incorrectly overwrite a 'true' value with 'false' because the sub-task is only run if
                     // jobHasErrored is false.
                     if (subJob.status.error) {
                         subTaskErrored = true;
-                        cancelMessage = String.format("Task cancelled due to error in %s task", subJobName);
+                        cancelMessage = String.format("Tarea cancelada por error en %s", subJobName);
                     }
                 } else {
                     // Cancel (fail) next sub-task and continue.
@@ -199,7 +199,7 @@ public abstract class MonitorableJob implements Runnable, Serializable {
                 cancel(cancelMessage);
             }
             // Complete the job (as success if no errors encountered, as failure otherwise).
-            if (!parentJobErrored && !subTaskErrored) status.completeSuccessfully("Job complete!");
+            if (!parentJobErrored && !subTaskErrored) status.completeSuccessfully("Trabajo completado!");
             else status.complete(true);
             // Run final steps of job pending completion or error. Note: any tasks that depend on job success should
             // check job status in jobFinished to determine if final step should be executed (e.g., storing feed
@@ -210,7 +210,7 @@ public abstract class MonitorableJob implements Runnable, Serializable {
             // We retain finished or errored jobs on the server until they are fetched via the API, which implies they
             // could be displayed by the client.
         } catch (Exception e) {
-            status.fail("Job failed due to unhandled exception!", e);
+            status.fail("El trabajo falló debido a un error no controlado!", e);
         } finally {
             LOG.info("{} (jobId={}) {} in {} ms", type, jobId, status.error ? "errored" : "completed", status.duration);
             active = false;
