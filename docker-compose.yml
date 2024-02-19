@@ -19,6 +19,6 @@ services:
       - ./target:/app/target
       - ./configurations/default/env.yml:/app/configurations/default/env.yml
       - ./configurations/default/server.dev.yml:/app/configurations/default/server.yml
-    command: sh -c 'java -Dfile.encoding=UTF-8 -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.yml'
+    command: sh -c 'java -Dfile.encoding=UTF-8 -Xmx4G -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.yml'
     ports:
       - "5000:5000"

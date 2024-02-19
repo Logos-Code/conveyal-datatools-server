@@ -18,7 +18,7 @@ down:
 	docker compose down
 
 run-jar:
-	java "-Dfile.encoding=UTF-8" -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
+	java "-Dfile.encoding=UTF-8" -Xmx4G -jar target/wri-conveyal-gtfs-server.jar configurations/default/env.yml configurations/default/server.dev.yml
 
 deploy-wri-prod: build
 	rm -rf ${DEPLOY_AUX_DIR}
@@ -28,6 +28,6 @@ deploy-wri-prod: build
 	cp configurations/default/server.yml ${DEPLOY_AUX_DIR}
 	cp -r .ebextensions ${DEPLOY_AUX_DIR}
 	cp -r .platform ${DEPLOY_AUX_DIR}
-	echo "web: java -Dfile.encoding=UTF-8 -jar wri-conveyal-gtfs-server.jar env.yml server.yml" > ${DEPLOY_AUX_DIR}/Procfile
+	echo "web: java -Dfile.encoding=UTF-8 -Xmx4G -jar wri-conveyal-gtfs-server.jar env.yml server.yml" > ${DEPLOY_AUX_DIR}/Procfile
 	cd ${DEPLOY_AUX_DIR}; zip -r ${FINAL_BUILD_NAME}.zip * .platform .ebextensions
 	aws --profile wri-prod s3 cp ${DEPLOY_AUX_DIR}/${FINAL_BUILD_NAME}.zip s3://wri-conveyal-gtfs-ui/${FINAL_BUILD_NAME}.zip
